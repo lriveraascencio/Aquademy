@@ -5,6 +5,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -15,9 +17,11 @@ public class Review {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long reviewId;
 
-	private Long course_Id;
+	@ManyToOne
+	private Course course;
 
-	private Long user_Id;
+	@OneToOne
+	private User user;
 
 	@Column(name = "rating")
 	private int rating;
@@ -30,18 +34,14 @@ public class Review {
 		// TODO Auto-generated constructor stub
 	}
 
-
-
-	public Review(Long reviewId, Long course_Id, Long user_Id, int rating, String comment) {
+	public Review(Long reviewId, Course course, User user, int rating, String comment) {
 		super();
 		this.reviewId = reviewId;
-		this.course_Id = course_Id;
-		this.user_Id = user_Id;
+		this.course = course;
+		this.user = user;
 		this.rating = rating;
 		this.comment = comment;
 	}
-
-
 
 	public Long getReviewId() {
 		return reviewId;
@@ -50,8 +50,6 @@ public class Review {
 	public void setReviewId(Long reviewId) {
 		this.reviewId = reviewId;
 	}
-	
-	
 
 //	public User getUser() {
 //		return user;
@@ -61,35 +59,25 @@ public class Review {
 //		this.user = user;
 //	}
 
-
-
 	public int getRating() {
 		return rating;
 	}
 
-	public Long getCourse_Id() {
-		return course_Id;
+	public Course getCourse() {
+		return course;
 	}
 
-
-
-	public void setCourse_Id(Long course_Id) {
-		this.course_Id = course_Id;
+	public void setCourse(Course course) {
+		this.course = course;
 	}
 
-
-
-	public Long getUser_Id() {
-		return user_Id;
+	public User getUser() {
+		return user;
 	}
 
-
-
-	public void setUser_Id(Long user_Id) {
-		this.user_Id = user_Id;
+	public void setUser(User user) {
+		this.user = user;
 	}
-
-
 
 	public void setRating(int rating) {
 		this.rating = rating;
@@ -102,8 +90,6 @@ public class Review {
 	public void setComment(String comment) {
 		this.comment = comment;
 	}
-
-
 
 //	public Course getCourse() {
 //		return course;

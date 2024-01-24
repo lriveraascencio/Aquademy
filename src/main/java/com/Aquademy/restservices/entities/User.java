@@ -4,6 +4,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 //ss
@@ -36,15 +37,33 @@ public class User {
 	@Column(name = "role", length = 50, nullable = false)
 	private String role;
 
-	private Long cart_Id;
-//	private Cart cart;
+	@OneToOne(mappedBy = "user")
+	private Cart cart;
 
 	public User() {
 		// TODO Auto-generated constructor stub
 	}
+//
+//	public User(Long userId, String userName, String firstName, String lastName, String bio, String experience,
+//			String domainExpertise, String role, Cart cart) {
+//		super();
+//		this.userId = userId;
+//		this.userName = userName;
+//		this.firstName = firstName;
+//		this.lastName = lastName;
+//		this.bio = bio;
+//		this.experience = experience;
+//		this.domainExpertise = domainExpertise;
+//		this.role = role;
+//		this.cart = cart;
+//	}
+
+	public Long getUserId() {
+		return userId;
+	}
 
 	public User(Long userId, String userName, String firstName, String lastName, String bio, String experience,
-			String domainExpertise, String role, Long cart_Id) {
+			String domainExpertise, String role) {
 		super();
 		this.userId = userId;
 		this.userName = userName;
@@ -54,11 +73,7 @@ public class User {
 		this.experience = experience;
 		this.domainExpertise = domainExpertise;
 		this.role = role;
-		this.cart_Id = cart_Id;
-	}
 
-	public Long getUserId() {
-		return userId;
 	}
 
 	public void setUserId(Long userId) {
@@ -119,25 +134,6 @@ public class User {
 
 	public void setRole(String role) {
 		this.role = role;
-	}
-
-//	public Cart getCart() {
-//		return cart;
-//	}
-//
-//	public void setCart(Cart cart) {
-//		this.cart = cart;
-//	}
-
-
-
-
-	public Long getCart_Id() {
-		return cart_Id;
-	}
-
-	public void setCart_Id(Long cart_Id) {
-		this.cart_Id = cart_Id;
 	}
 
 }

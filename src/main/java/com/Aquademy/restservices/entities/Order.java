@@ -1,11 +1,12 @@
 package com.Aquademy.restservices.entities;
 
 import java.util.Date;
-import java.util.List;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -16,30 +17,26 @@ public class Order {
 	@GeneratedValue
 	private Long orderId;
 
-	private Long user_Id;
-
-	private List<Integer> courseId;
-
+	@ManyToOne(fetch = FetchType.LAZY)
+	private User user;
+	
+	
 	private Double total;
 
+	
 	private Date date;
 
 	public Order() {
 		// TODO Auto-generated constructor stub
 	}
 
-	
-
-	public Order(Long orderId, Long user_Id, List<Integer> courseId, Double total, Date date) {
+	public Order(Long orderId, User user, Double total, Date date) {
 		super();
 		this.orderId = orderId;
-		this.user_Id = user_Id;
-		this.courseId = courseId;
+		this.user = user;
 		this.total = total;
 		this.date = date;
 	}
-
-
 
 	public Long getOrderId() {
 		return orderId;
@@ -65,26 +62,12 @@ public class Order {
 //		this.courses = courses;
 //	}
 
-	
-
-	public List<Integer> getCourseId() {
-		return courseId;
+	public User getUser() {
+		return user;
 	}
 
-	public Long getUser_Id() {
-		return user_Id;
-	}
-
-
-
-	public void setUser_Id(Long user_Id) {
-		this.user_Id = user_Id;
-	}
-
-
-
-	public void setCourseId(List<Integer> courseId) {
-		this.courseId = courseId;
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 	public Double getTotal() {
@@ -102,5 +85,6 @@ public class Order {
 	public void setDate(Date date) {
 		this.date = date;
 	}
+
 
 }

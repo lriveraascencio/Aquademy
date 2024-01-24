@@ -1,9 +1,14 @@
 package com.Aquademy.restservices.entities;
 
+import java.util.List;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -14,25 +19,25 @@ public class Cart {
 	@GeneratedValue
 	private Long cartId;
 
-	private Long user_Id;
+	@OneToOne(fetch = FetchType.LAZY)
+	private User user;
 
-////	@Column(name="courses")
-//	@OneToOne
-	private Long course_Id;
+	@OneToMany
+	private List<Course> courses;
 
 	@Column(name = "total")
 	private Double Total;
 
-	public Cart() {
-		// TODO Auto-generated constructor stub
-	}
-
-	public Cart(Long cartId, Long user_Id, Long course_Id, Double total) {
+	public Cart(Long cartId, User user, List<Course> courses, Double total) {
 		super();
 		this.cartId = cartId;
-		this.user_Id = user_Id;
-		this.course_Id = course_Id;
+		this.user = user;
+		this.courses = courses;
 		Total = total;
+	}
+
+	public Cart() {
+		// TODO Auto-generated constructor stub
 	}
 
 	public Long getCartId() {
@@ -51,24 +56,24 @@ public class Cart {
 //		this.courses = courses;
 //	}
 
-	public Long getUser_Id() {
-		return user_Id;
-	}
-
-	public void setUser_Id(Long user_Id) {
-		this.user_Id = user_Id;
-	}
-
 	public Double getTotal() {
 		return Total;
 	}
 
-	public Long getCourse_Id() {
-		return course_Id;
+	public User getUser() {
+		return user;
 	}
 
-	public void setCourse_Id(Long course_Id) {
-		this.course_Id = course_Id;
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+	public List<Course> getCourses() {
+		return courses;
+	}
+
+	public void setCourses(List<Course> courses) {
+		this.courses = courses;
 	}
 
 	public void setTotal(Double total) {

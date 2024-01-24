@@ -6,6 +6,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -35,13 +36,29 @@ public class Course {
 	private int duration;
 
 //	@Column(name = "reviews")
-
-	private List<Integer> reviewIds;
+	@OneToMany(mappedBy = "course")
+	private List<Review> reviews;
 
 	public Course() {
-		super();
 		// TODO Auto-generated constructor stub
 	}
+	
+	
+
+	public Course(Long courseId, String name, String domain, String description, String author, double price,
+			int duration, List<Review> reviews) {
+		super();
+		this.courseId = courseId;
+		this.name = name;
+		this.domain = domain;
+		this.description = description;
+		this.author = author;
+		this.price = price;
+		this.duration = duration;
+		this.reviews = reviews;
+	}
+
+
 
 	public Long getCourseId() {
 		return courseId;
@@ -99,6 +116,18 @@ public class Course {
 		this.duration = duration;
 	}
 
+
+
+	public List<Review> getReviews() {
+		return reviews;
+	}
+
+
+
+	public void setReviews(List<Review> reviews) {
+		this.reviews = reviews;
+	}
+
 //	public List<Review> getReviews() {
 //		return reviews;
 //	}
@@ -108,14 +137,6 @@ public class Course {
 //	}
 	
 
-
-	public List<Integer> getReviewIds() {
-		return reviewIds;
-	}
-
-	public void setReviewIds(List<Integer> reviewIds) {
-		this.reviewIds = reviewIds;
-	}
 
 	// Getters and setters
 
