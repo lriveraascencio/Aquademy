@@ -7,5 +7,6 @@ import com.Aquademy.restservices.entities.User;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Long>{
+	User findByUserName(String userName);
 	
 }

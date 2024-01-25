@@ -4,6 +4,7 @@ import java.util.List;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
@@ -35,18 +36,15 @@ public class Course {
 	@Column(name = "duration")
 	private int duration;
 
-//	@Column(name = "reviews")
-	@OneToMany(mappedBy = "course")
-	private List<Review> reviews;
+//	@OneToMany(mappedBy = "course")
+//	private List<Review> reviews;
 
 	public Course() {
 		// TODO Auto-generated constructor stub
 	}
-	
-	
 
 	public Course(Long courseId, String name, String domain, String description, String author, double price,
-			int duration, List<Review> reviews) {
+			int duration) {
 		super();
 		this.courseId = courseId;
 		this.name = name;
@@ -55,10 +53,7 @@ public class Course {
 		this.author = author;
 		this.price = price;
 		this.duration = duration;
-		this.reviews = reviews;
 	}
-
-
 
 	public Long getCourseId() {
 		return courseId;
@@ -116,17 +111,13 @@ public class Course {
 		this.duration = duration;
 	}
 
-
-
-	public List<Review> getReviews() {
-		return reviews;
-	}
-
-
-
-	public void setReviews(List<Review> reviews) {
-		this.reviews = reviews;
-	}
+//	public List<Review> getReviews() {
+//		return reviews;
+//	}
+//
+//	public void setReviews(List<Review> reviews) {
+//		this.reviews = reviews;
+//	}
 
 //	public List<Review> getReviews() {
 //		return reviews;
@@ -135,8 +126,6 @@ public class Course {
 //	public void setReviews(List<Review> reviews) {
 //		this.reviews = reviews;
 //	}
-	
-
 
 	// Getters and setters
 
