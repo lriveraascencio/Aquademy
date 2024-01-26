@@ -1,16 +1,12 @@
 package com.Aquademy.restservices.entities;
 
-import java.util.List;
-
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Size;
 
 //ss
 @Entity
@@ -20,10 +16,12 @@ public class User {
 	@Id
 	@GeneratedValue
 	private Long userId;
-
+	
+	@NotEmpty(message="Username is mandatory field. please provide username")
 	@Column(name = "userName", length = 50, nullable = false, unique = true)
 	private String userName;
-
+	
+	@Size(min=2, message="FirstName should have arleast 2 characters")
 	@Column(name = "first_name", length = 50, nullable = false)
 	private String firstName;
 

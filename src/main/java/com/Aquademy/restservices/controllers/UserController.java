@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,10 +21,15 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import com.Aquademy.restservices.entities.User;
 import com.Aquademy.restservices.exceptions.UserExistsException;
+import com.Aquademy.restservices.exceptions.UserNameNotFoundException;
 import com.Aquademy.restservices.exceptions.UserNotFoundException;
 import com.Aquademy.restservices.services.UserService;
 
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.Min;
+
 @RestController
+@Validated
 @RequestMapping(value = "/api/users")
 public class UserController {
 
@@ -37,7 +43,7 @@ public class UserController {
 
 	// addUser
 	@PostMapping
-	public ResponseEntity<Void> addUser(@RequestBody User user, UriComponentsBuilder builder) throws UserExistsException {
+	public ResponseEntity<Void> addUser(@Valid @RequestBody User user, UriComponentsBuilder builder) throws UserExistsException {
 		try {
 			 userService.addUser(user);
 			 HttpHeaders headers = new HttpHeaders();
@@ -61,7 +67,7 @@ public class UserController {
 
 	// UserDetailsById
 	@GetMapping("/{userId}")
-	public Optional<User> getUserDetailsById(@PathVariable Long userId) throws UserNotFoundException {
+	public Optional<User> getUserDetailsById(@PathVariable("userId") @Min(1) Long userId) throws UserNotFoundException {
 
 		try {
 			return userService.getUserDetailsById(userId);
@@ -80,8 +86,17 @@ public class UserController {
 	
 	//getUserByUsername
 	@GetMapping("/byusername/{userName}")
-	public User getUserByUserName(@PathVariable("userName") String userName) {
-		return userService.getUserByUsername(userName);
+	public User getUserByUserName(@PathVariable("userName") String userName) throws UserNameNotFoundException {
+		User user =  userService.getUserByUsername(userName);
+		if(user==null)
+			throw new UserNameNotFoundException("UserName: '" + userName + "'not found in User Repository");
+		return user;
 	}
+	
+	
+	
+	
+	
+	
 
 }
