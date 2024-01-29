@@ -1,5 +1,8 @@
 package com.Aquademy.restservices.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -7,7 +10,6 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
@@ -20,12 +22,12 @@ public class Review {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long reviewId;
 
-	@ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
-	@JoinColumn(name = "courseId")
+	@ManyToOne
+//	@JsonIgnore
 	private Course course;
 
-	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "userId")
+	@ManyToOne
+//	@JsonIgnore
 	private User user;
 
 	@Column(name = "rating")
@@ -33,19 +35,17 @@ public class Review {
 
 	@Column(name = "comment")
 	private String comment;
+	
+	
+	@JsonProperty("userName")
+	public String getUserName() {
+		return user != null ? user.getUserName() : null;
+	}
+	
 
 	public Review() {
 		super();
 		// TODO Auto-generated constructor stub
-	}
-
-	public Review(Long reviewId, Course course, User user, int rating, String comment) {
-		super();
-		this.reviewId = reviewId;
-		this.course = course;
-		this.user = user;
-		this.rating = rating;
-		this.comment = comment;
 	}
 
 	public Long getReviewId() {

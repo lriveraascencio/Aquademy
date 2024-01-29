@@ -1,9 +1,20 @@
 package com.Aquademy.restservices.entities;
 
+import java.util.Collections;
+import java.util.List;
+import java.util.stream.Collectors;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
@@ -14,14 +25,14 @@ import jakarta.validation.constraints.Size;
 public class User {
 
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long userId;
-	
-	@NotEmpty(message="Username is mandatory field. please provide username")
+
+	@NotEmpty(message = "Username is mandatory field. please provide username")
 	@Column(name = "userName", length = 50, nullable = false, unique = true)
 	private String userName;
-	
-	@Size(min=2, message="FirstName should have arleast 2 characters")
+
+	@Size(min = 2, message = "FirstName should have arleast 2 characters")
 	@Column(name = "first_name", length = 50, nullable = false)
 	private String firstName;
 
@@ -40,15 +51,27 @@ public class User {
 	@Column(name = "role", length = 50, nullable = false)
 	private String role;
 
-//	@OneToMany
-//	private List<Course> courses;
+	@OneToOne(mappedBy = "user")
+	private Cart cart;
 
-//	//@OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
-//	private Cart cart;
-//
-//	@OneToMany(mappedBy = "user" , cascade = CascadeType.ALL)
-//	private List<Order> orders;
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+	@JsonIgnore
+	private List<Order> orders;
+	
+	
+	@JsonProperty("Enrrolled Courses")
+	public List<Course> getCourses() {
+		if (orders == null) {
+            return Collections.emptyList();
+        }
 
+		return orders.stream()
+                .filter(order -> order.getCourses() != null)
+                .flatMap(order -> order.getCourses().stream())
+                .distinct()
+                .collect(Collectors.toList());
+	}
+	
 	
 
 	public User() {
@@ -132,28 +155,23 @@ public class User {
 		this.role = role;
 	}
 
-//	public List<Course> getCourses() {
-//		return courses;
-//	}
-//
-//	public void setCourses(List<Course> courses) {
-//		this.courses = courses;
-//	}
+	public Cart getCart() {
+		return cart;
+	}
 
-//	public Cart getCart() {
-//		return cart;
-//	}
-//
-//	public void setCart(Cart cart) {
-//		this.cart = cart;
-//	}
-//
-//	public List<Order> getOrders() {
-//		return orders;
-//	}
-//
-//	public void setOrders(List<Order> orders) {
-//		this.orders = orders;
-//	}
+	public void setCart(Cart cart) {
+		this.cart = cart;
+	}
+
+	@JsonProperty("orders")
+	public List<Order> getOrders() {
+		return orders;
+	}
+
+	public void setOrders(List<Order> orders) {
+		this.orders = orders;
+	}
+	
+	
 
 }

@@ -1,7 +1,6 @@
 package com.Aquademy.restservices.controllers;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -19,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import com.Aquademy.restservices.dtos.UserDTO;
 import com.Aquademy.restservices.entities.User;
 import com.Aquademy.restservices.exceptions.UserExistsException;
 import com.Aquademy.restservices.exceptions.UserNameNotFoundException;
@@ -67,15 +67,24 @@ public class UserController {
 
 	// UserDetailsById
 	@GetMapping("/{userId}")
-	public Optional<User> getUserDetailsById(@PathVariable("userId") @Min(1) Long userId) throws UserNotFoundException {
-
-		try {
-			return userService.getUserDetailsById(userId);
-		} catch (UserNotFoundException ex) {
-			throw new ResponseStatusException(HttpStatus.NOT_FOUND, ex.getMessage());
-		}
-
-	}
+    public ResponseEntity<UserDTO> getUserDetailsById(@PathVariable("userId") @Min(1) Long userId) {
+        try {
+            UserDTO userDTO = userService.getUserDetailsById(userId);
+            return ResponseEntity.ok(userDTO);
+        } catch (UserNotFoundException ex) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, ex.getMessage());
+        }
+    }
+//	@GetMapping("/{userId}")
+//	public Optional<User> getUserDetailsById(@PathVariable("userId") @Min(1) Long userId) throws UserNotFoundException {
+//
+//		try {
+//			return userService.getUserDetailsById(userId);
+//		} catch (UserNotFoundException ex) {
+//			throw new ResponseStatusException(HttpStatus.NOT_FOUND, ex.getMessage());
+//		}
+//
+//	}
 
 	// deleteUserById
 	@DeleteMapping("/{userId}")

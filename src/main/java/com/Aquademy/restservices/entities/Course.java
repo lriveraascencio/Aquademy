@@ -2,9 +2,12 @@ package com.Aquademy.restservices.entities;
 
 import java.util.List;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
@@ -14,7 +17,7 @@ import jakarta.persistence.Table;
 public class Course {
 
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long courseId;
 
 	@Column(name = "name")
@@ -35,15 +38,16 @@ public class Course {
 	@Column(name = "duration")
 	private int duration;
 
-	@OneToMany(mappedBy = "course")
+	@OneToMany(mappedBy = "course", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private List<Review> reviews;
+	
 
 	public Course() {
 		// TODO Auto-generated constructor stub
 	}
 
 	public Course(Long courseId, String name, String domain, String description, String author, double price,
-			int duration, List<Review> reviews) {
+			int duration) {
 		super();
 		this.courseId = courseId;
 		this.name = name;
@@ -52,7 +56,6 @@ public class Course {
 		this.author = author;
 		this.price = price;
 		this.duration = duration;
-		this.reviews = reviews;
 	}
 
 	public Long getCourseId() {
@@ -119,6 +122,6 @@ public class Course {
 		this.reviews = reviews;
 	}
 
-	// Getters and setters
+	
 
 }

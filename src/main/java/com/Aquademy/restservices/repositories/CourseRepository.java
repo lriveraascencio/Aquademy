@@ -9,9 +9,13 @@ import com.Aquademy.restservices.entities.Course;
 
 @Repository
 public interface CourseRepository extends JpaRepository<Course, Long> {
-//	
-//	List<Course> findByDomain(String domain);
-//    List<Course> findByOrderByPriceDesc();
-//    List<Course> findByOrderByPriceAsc();
+	
+	Course findByname(String name);
+
+	List<Course> findByDomain(String domain);
+
+	List<Course> findByOrderByPriceDesc();
+
+	List<Course> findByOrderByPriceAsc();
 
 }

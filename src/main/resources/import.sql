@@ -9,12 +9,12 @@ INSERT INTO base VALUES( 105, 'Software Development','Rachel', 'Miller', 'Full S
 INSERT INTO base VALUES( 106, 'Quality Assurance', 'Daniel', 'Taylor','QA Engineer','daniel_taylor', '3 years in quality assurance', 'QA engineer ensuring the quality and reliability of software applications.');
 
 -- Inserting data into the cart table
---INSERT INTO cart VALUES (  0.0 , 01, 101);
---INSERT INTO cart VALUES (  0.0 , 02, 102);
---INSERT INTO cart VALUES (  0.0 , 03, 103);
---INSERT INTO cart VALUES (  0.0 , 04, 104);
---INSERT INTO cart VALUES (  0.0 , 05, 105);
---INSERT INTO cart VALUES (  0.0 , 06, 106);
+INSERT INTO cart VALUES (  0.0 , 01, 101);
+INSERT INTO cart VALUES (  0.0 , 02, 102);
+INSERT INTO cart VALUES (  0.0 , 03, 103);
+INSERT INTO cart VALUES (  0.0 , 04, 104);
+INSERT INTO cart VALUES (  0.0 , 05, 105);
+INSERT INTO cart VALUES (  0.0 , 06, 106);
 
 -- Inserting data into courses table
 INSERT INTO courses VALUES (30, 49.99 , 801, 'John Smith', 'Learn the basics of programming with this introductory course.', 'Computer Science', 'Introduction to Programming');
@@ -25,17 +25,17 @@ INSERT INTO courses VALUES (90, 89.99 , 902, 'Michael Clark', 'Dive deep into ma
 INSERT INTO courses VALUES (105, 119.99 , 804, 'Jessica Taylor', 'Learn the latest trends and best practices in mobile app development.', 'Mobile App Development', 'Advanced Mobile App Development');
 
 -- Inserting data into the reviews table
-INSERT INTO reviews VALUES (4, 801, 1, 101, 'Great course for beginners!');
-INSERT INTO reviews VALUES (5, 901, 2, 102, 'Excellent content and clear explanations.');
-INSERT INTO reviews VALUES (4, 802, 3, 103, 'Enjoyed the practical exercises and real-world examples.');
-INSERT INTO reviews VALUES (5, 902, 4, 104, 'Transformative experience! Highly recommended.');
-INSERT INTO reviews VALUES (4, 803, 5, 105, 'In-depth coverage of software engineering principles.');
-INSERT INTO reviews VALUES (5, 902, 6, 106, 'Amazing insights into machine learning concepts.');
+INSERT INTO reviews VALUES (4, 801, 10, 101, 'Great course for beginners!');
+INSERT INTO reviews VALUES (5, 901, 20, 102, 'Excellent content and clear explanations.');
+INSERT INTO reviews VALUES (4, 802, 30, 103, 'Enjoyed the practical exercises and real-world examples.');
+INSERT INTO reviews VALUES (5, 902, 40, 104, 'Transformative experience! Highly recommended.');
+INSERT INTO reviews VALUES (4, 803, 50, 105, 'In-depth coverage of software engineering principles.');
+INSERT INTO reviews VALUES (5, 902, 60, 106, 'Amazing insights into machine learning concepts.');
 
 
 
 --Inserting data into the orders table (TOTAL, DATE, ORDER ID, USER ID)
---INSERT INTO orders VALUES ()
+--INSERT INTO orders VALUES (01, '2024-01-25', 0001, 101);
 
 
 

@@ -6,9 +6,9 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.server.ResponseStatusException;
 
+import com.Aquademy.restservices.dtos.UserDTO;
 import com.Aquademy.restservices.entities.User;
 import com.Aquademy.restservices.exceptions.UserExistsException;
 import com.Aquademy.restservices.exceptions.UserNotFoundException;
@@ -29,10 +29,10 @@ public class UserService {
 		// if user exists using username
 		User existingUser = userRepository.findByUserName(user.getUserName());
 		// if not exists throw UserExistsException
-		if(existingUser != null) {
+		if (existingUser != null) {
 			throw new UserExistsException("User already exists in repository");
 		}
-		
+
 		return userRepository.save(user);
 	}
 
@@ -49,14 +49,20 @@ public class UserService {
 	}
 
 	// get Details User by ID
-	public Optional<User> getUserDetailsById(Long userId) throws UserNotFoundException {
-		Optional<User> user = userRepository.findById(userId);
+	public UserDTO getUserDetailsById(Long userId) throws UserNotFoundException {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new UserNotFoundException("User not found with ID: " + userId));
 
-		if (!user.isPresent()) {
-			throw new UserNotFoundException("User not found in user Repository");
-		}
-		return user;
-	}
+        return new UserDTO(user); // Assuming you have a constructor in UserDTO that takes a User
+    }
+//	public Optional<User> getUserDetailsById(Long userId) throws UserNotFoundException {
+//		Optional<User> user = userRepository.findById(userId);
+//
+//		if (!user.isPresent()) {
+//			throw new UserNotFoundException("User not found in user Repository");
+//		}
+//		return user;
+//	}
 
 	// deleteUserById
 	public void deleteUserById(Long userId) throws UserNotFoundException {
@@ -69,9 +75,8 @@ public class UserService {
 		userRepository.deleteById(userId);
 
 	}
-	
-	
-	//getUserByUsername
+
+	// getUserByUsername
 	public User getUserByUsername(String userName) {
 		return userRepository.findByUserName(userName);
 	}
